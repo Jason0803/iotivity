@@ -108,6 +108,7 @@ CAResult_t CASendPingMessage(const CAEndpoint_t *endpoint, bool withCustody, CAP
         if (!strcmp(cur->endpoint.addr, endpoint->addr))
         {
             OIC_LOG_V(ERROR, TAG, "Ping already sent to [%s]", cur->endpoint.addr);
+            oc_mutex_unlock(g_pingInfoListMutex);   // must be unlocked before return itself
             return CA_STATUS_FAILED;
         }
     }
